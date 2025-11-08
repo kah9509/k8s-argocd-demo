@@ -35,7 +35,7 @@ spec:
               value: Laravel API v1
             - name: VERSION
               value: v1
-          image: traefik/whoami:v1.10.1
+          image: traefik/whoami:latest
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3
