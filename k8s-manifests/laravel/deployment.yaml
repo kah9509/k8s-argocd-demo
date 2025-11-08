@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    deployment.kubernetes.io/revision: "3"
-    kubectl.kubernetes.io/last-applied-configuration: |
+    deployment.kubernetes.io/revision: "3" # 버전 관리
+    kubectl.kubernetes.io/last-applied-configuration: | # 마지막 적용 설정
       {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"laravel-api","framework":"php","tier":"backend"},"name":"laravel-api","namespace":"default"},"spec":{"replicas":3,"selector":{"matchLabels":{"app":"laravel-api"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":1},"type":"RollingUpdate"},"template":{"metadata":{"labels":{"app":"laravel-api","version":"v2"}},"spec":{"containers":[{"env":[{"name":"WHOAMI_NAME","value":"Laravel API v2 - Enhanced with validation"},{"name":"VERSION","value":"v2"}],"image":"traefik/whoami:latest","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/","port":80},"initialDelaySeconds":5,"periodSeconds":10,"timeoutSeconds":3},"name":"laravel","ports":[{"containerPort":80,"name":"http"}],"readinessProbe":{"failureThreshold":2,"httpGet":{"path":"/","port":80},"initialDelaySeconds":3,"periodSeconds":5,"timeoutSeconds":2},"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}}]}}}}
   labels:
     app: laravel-api
@@ -12,24 +12,24 @@ metadata:
   name: laravel-api
   namespace: default
 spec:
-  progressDeadlineSeconds: 600
-  replicas: 3
-  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600 # 진행 시간 제한
+  replicas: 5 # pod 의 개수
+  revisionHistoryLimit: 10 # 버전 관리 개수
   selector:
     matchLabels:
       app: laravel-api
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-    type: RollingUpdate
-  template:
+  strategy: # 배포전략
+    rollingUpdate: # 롤링 업데이트
+      maxSurge: 1 # 최대 초과 배포 가능한 pod 개수
+      maxUnavailable: 1 # 최대 비정상 배포 가능한 pod 개수
+    type: RollingUpdate # 롤링 업데이트 전략
+  template: # pod 템플릿
     metadata:
       labels:
         app: laravel-api
         version: v1
     spec:
-      containers:
+      containers: # container 설정
         - env:
             - name: WHOAMI_NAME
               value: Laravel API v1
