@@ -13,7 +13,7 @@ metadata:
   namespace: default
 spec:
   progressDeadlineSeconds: 600 # 진행 시간 제한
-  replicas: 5 # pod 의 개수
+  replicas: 10 # pod 의 개수
   revisionHistoryLimit: 10 # 버전 관리 개수
   selector:
     matchLabels:
